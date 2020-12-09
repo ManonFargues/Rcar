@@ -1,0 +1,15 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="container">
+        <div class="section">
+            <div class="row">
+                <div class="col s12 m12">
+                    <h1>Ajout de voiture</h1>
+                    {{ form(form) }}
+                    <a href="{{ path("home") }}">Ajout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
