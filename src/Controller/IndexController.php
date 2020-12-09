@@ -9,6 +9,7 @@ use App\Form\CarType;
 use App\Repository\CarRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -37,9 +38,27 @@ class IndexController extends AbstractController
     /**
      * @Route("/add", name="add")
      */
-    public function add(EntityManagerInterface $manager)
+    public function add(EntityManagerInterface $manager, Request $request)
     {
         $form = $this->createForm(CarType::class);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+
+            $car = $form->getData();
+            $manager->persist($car);
+            $manager->flush();
+
+            $this->addFlash(
+                'notice',
+                'La voiture a bien été ajoutée'
+            );
+
+
+            return $this->redirectToRoute('home');
+        }
+
         return $this->render('home/add.html.twig', [
             'form' => $form->createView(),
         ]);
