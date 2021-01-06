@@ -1,0 +1,12 @@
+{{ form_start(form, {'attr' : {'novalidate' : 'novalidate'}}) }}
+<div class="my-4">
+    {{ form_label(form.model, 'Modèle de la voiture : ', { label_attr : {'class': 'form_model'}}) }}
+    {{ form_widget(form.model) }}
+</div>
+<div class="my-4">
+    {{ form_label(form.price, 'Prix de la voiture : ') }}
+    {{ form_widget(form.price) }}
+</div>
+<div class="my-4">
+{{ form_row(form.image) }}
+</div>

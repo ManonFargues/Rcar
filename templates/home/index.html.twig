@@ -11,11 +11,10 @@
         </div>
         <!-- /.col-lg-8 -->
         <div class="col-lg-5">
-            <h1 class="font-weight-light">Business Name or Tagline</h1>
-            <p>This is a template that is great for small businesses. It doesn't have too much fancy flare to it, but it
-                makes a great use of the standard Bootstrap core components. Feel free to use this template for any
-                project you want!</p>
-            <a class="btn btn-primary" href="#">Call to Action!</a>
+            <h1 class="font-weight-light">Location de voiture : choisissez votre véhicule</h1>
+            <p>Chez RCar, nous vous offrons la possibilité de louer une voiture adaptée à votre budget ainsi qu'à vos besoins. Vous avez aussi la possibilité de proposer votre propre voiture à la location.
+                Nos voitures à louer sont regroupées par catégories. La location de voiture avec RCar est simple et économique. </p>
+            <a class="btn btn-primary" href="{{ path("add") }}">Mettre une voiture en location</a>
         </div>
         <!-- /.col-md-4 -->
     </div>
@@ -33,6 +32,7 @@
 
 
     <div class="row">
+        <!--
         <div>
             <ul>
                 {% for car in cars %}
@@ -40,18 +40,24 @@
                 {% endfor %}
             </ul>
         </div>
+        -->
+        {% for car in cars %}
         <div class="col-md-4 mb-5">
             <div class="card h-100">
                 <div class="card-body">
-                    <h2 class="card-title">Card One</h2>
+                    <h2 class="card-title">{{ car.model }}</h2>
                     <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex
                         numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
+                    <p>Prix de la location : {{ car.price }} €</p>
                 </div>
                 <div class="card-footer">
-                    <a href="#" class="btn btn-primary btn-sm">More Info</a>
+                    <a href="{{ path('show', {'id' : car.id}) }}" class="btn btn-primary btn-sm">Détails</a>
+                    <a href="{{ path('edit', {'id' : car.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+                    <a href="{{ path('delete', {'id' : car.id}) }}" class="btn btn-danger btn-sm">Supprimer</a>
                 </div>
             </div>
         </div>
+        {% endfor %}
     </div>
     <!-- /.row -->
 

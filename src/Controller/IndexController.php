@@ -5,9 +5,11 @@ namespace App\Controller;
 
 
 use App\Entity\Car;
+use App\Entity\Keyword;
 use App\Form\CarType;
 use App\Repository\CarRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,8 +19,9 @@ class IndexController extends AbstractController
 {
     /**
      * @Route("/", name="home")
+     * @Template()
      */
-    public function index(CarRepository $carRepository)
+    public function index(CarRepository $carRepository, EntityManagerInterface $manager)
     {
         $cars = $carRepository->findAll();
 
@@ -46,7 +49,23 @@ class IndexController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
 
+            $path = $this->getParameter('kernel.project_dir') .'/public/images';
+
+            // récupere valeur soumise sous forme d'obj car
             $car = $form->getData();
+            // recuperer l'image
+            $image = $car->GetImage();
+            // recupere le file soumis
+            $file = $image->getFile();
+
+            // creer un nom unique
+            $name = md5(uniqid()). '.'.$file->guessExtension();
+            //deplace le fichier
+            $file->move($path, $name);
+
+            //donner le nom a l'image'
+            $image->setName($name);
+
             $manager->persist($car);
             $manager->flush();
 
@@ -67,14 +86,26 @@ class IndexController extends AbstractController
     /**
      * @Route("/edit/{id}", name="edit")
      */
-    public function edit(Car $car, EntityManagerInterface $manager)
+    public function edit(Car $car, EntityManagerInterface $manager, Request $request)
     {
-        $car->setModel("Ferrari");
+        $form = $this->createForm(CarType::class, $car);
 
-        $manager->flush($car);
+        $form->handleRequest($request);
 
-        return $this->render('home/show.html.twig', [
+        if($form->isSubmitted() && $form->isValid()) {
+
+            $manager->flush();
+            $this->addFlash(
+                'notice',
+                'Modification prise en compte'
+            );
+
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('home/edit.html.twig', [
             'car' => $car,
+            'form' => $form->createView()
         ]);
     }
 
