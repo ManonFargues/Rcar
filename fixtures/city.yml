@@ -1,0 +1,13 @@
+App\Entity\City:
+  bordeaux:
+    name: Bordeaux
+  paris:
+    name: Paris
+  lyon:
+    name: Lyon
+  lille:
+    name: Lille
+  nice:
+    name: Nice
+  nantes:
+    name: Nantes

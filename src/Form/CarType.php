@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Car;
+use App\Entity\City;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -24,6 +26,11 @@ class CarType extends AbstractType
                 'entry_type' => KeywordType::class,
                 'allow_add' => true,
                 'by_reference' => false,
+            ])
+            ->add('cities', EntityType::class, [
+                'class' => City::class,
+                'choice_label' => 'name',
+                'label' => "Ville :"
             ])
         ;
     }

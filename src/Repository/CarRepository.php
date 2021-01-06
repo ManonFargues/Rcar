@@ -19,6 +19,26 @@ class CarRepository extends ServiceEntityRepository
         parent::__construct($registry, Car::class);
     }
 
+    public function searchCar($criteria)
+    {
+        return $this->createQueryBuilder('c')
+            ->leftJoin('c.cities', 'city')
+            ->where('city.name = :cityName')
+            ->setParameter("cityName", $criteria['city']->getName())
+            ->andWhere('c.color = :color')
+            ->setParameter('color', $criteria['color'])
+            ->andWhere('c.carburant = :carburant')
+            ->setParameter('carburant', $criteria['carburant'])
+            ->andWhere('c.price > :minimumPrice')
+            ->setParameter('minimumPrice', $criteria['minimumPrice'])
+            ->andWhere('c.price < :maximumPrice')
+            ->setParameter('maximumPrice', $criteria['maximumPrice'])
+            ->getQuery()
+            ->getResult()
+            ;
+
+    }
+
     // /**
     //  * @return Car[] Returns an array of Car objects
     //  */

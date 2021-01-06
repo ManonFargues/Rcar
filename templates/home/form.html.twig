@@ -10,3 +10,11 @@
 <div class="my-4">
 {{ form_row(form.image) }}
 </div>
+<div class="my-4">
+    {{ form_row(form.cities) }}
+</div>
+<div class="my-4">
+    <p>Ajouter un mot clé (fumeur/non fumeur, voiture neuve ... ) :</p>
+    {{ form_widget(form.keywords) }}
+    <button class="addKeyword btn btn-outline-primary">+ Mot clé suplémentaire?</button>
+</div>

@@ -53,6 +53,16 @@ class Car
      */
     private $cities;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $color;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $carburant;
+
     public function __construct()
     {
         $this->keywords = new ArrayCollection();
@@ -134,6 +144,30 @@ class Car
     public function removeCity(City $city): self
     {
         $this->cities->removeElement($city);
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(string $color): self
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    public function getCarburant(): ?string
+    {
+        return $this->carburant;
+    }
+
+    public function setCarburant(string $carburant): self
+    {
+        $this->carburant = $carburant;
 
         return $this;
     }

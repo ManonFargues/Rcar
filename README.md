@@ -11,3 +11,5 @@ Site de location de voiture avec systeme d'authentification / Inscription
 	- Formulaire d'annonce 
 	- Barre de Recherche
 	- tchat? bundle 
+	
+Utilisation du bundle AliceBundle pour créer du faux contenu.
