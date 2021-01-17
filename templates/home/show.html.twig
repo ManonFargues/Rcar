@@ -24,7 +24,7 @@
                         <span>Description :</span>
                     {% for keyword in car.keywords %}
                         <span>{{ keyword.name }} {% if not loop.last %}, {% endif %}</span>
-                    {% endfor %}
+                        {% endfor %}
                     </div>
 
                     {% if car.cities |length > 0 %}
