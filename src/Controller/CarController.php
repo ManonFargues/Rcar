@@ -5,12 +5,16 @@ namespace App\Controller;
 
 
 use App\Entity\Car;
+use App\Entity\Image;
 use App\Entity\Keyword;
 use App\Form\CarType;
 use App\Repository\CarRepository;
+use App\Services\ImageHandler;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -41,31 +45,20 @@ class CarController extends AbstractController
     /**
      * @Route("/add", name="add")
      */
-    public function add(EntityManagerInterface $manager, Request $request)
+    public function add(EntityManagerInterface $manager, Request $request, ImageHandler $handler)
     {
         $form = $this->createForm(CarType::class);
-
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
 
-            $path = $this->getParameter('kernel.project_dir') .'/public/images';
-
-            // récupere valeur soumise sous forme d'obj car
+            $path = $this->getParameter('kernel.project_dir').'/public/images';
             $car = $form->getData();
-            // recuperer l'image
-            $image = $car->GetImage();
-            // recupere le file soumis
-            $file = $image->getFile();
 
-            // creer un nom unique
-            $name = md5(uniqid()). '.'.$file->guessExtension();
-            //deplace le fichier
-            $file->move($path, $name);
+            /** @var Image $image */
+            $image = $car->getImage();
 
-            //donner le nom a l'image'
-            $image->setName($name);
-
+            $image->setPath($path);
             $manager->persist($car);
             $manager->flush();
 
@@ -93,6 +86,13 @@ class CarController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+            $path = $this->getParameter('kernel.project_dir').'/public/images';
+            /**
+             * @var Image $image
+             */
+            $image = $form->getData()->getImage();
+
+            $image->setPath($path);
 
             $manager->flush();
             $this->addFlash(
@@ -100,7 +100,9 @@ class CarController extends AbstractController
                 'Modification prise en compte'
             );
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('show', [
+                'id' => $car->getId(),
+            ]);
         }
 
         return $this->render('home/edit.html.twig', [
@@ -127,5 +129,19 @@ class CarController extends AbstractController
         return $this->render('home/show.html.twig',[
             'car' => $car
         ]);
+    }
+
+    /**
+     * @Route("delete/keyword/{id}", name="dlete_keyword"),
+     *     methods={"POST"},
+     *     condition="request.headers.get(X-Requested-With" matches'/XMLHttpRequest/i'")
+     */
+
+    public function deleteKeyword(Keyword $keyword, EntityManagerInterface $entityManager)
+    {
+        $entityManager->remove($keyword);
+        $entityManager->flush();
+
+        return new JsonResponse();
     }
 }

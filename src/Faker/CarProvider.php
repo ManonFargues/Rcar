@@ -9,20 +9,21 @@ use Faker\Provider\Base;
 class CarProvider extends Base
 {
     const CARBURANT = [
-        'electrique',
-        'diesel',
-        'essence',
+        'Diesel',
+        'Electrique',
+        'Essence',
     ];
 
     const COLOR = [
-        'noir',
-        'rouge',
-        'blanc',
-        'gris',
-        'beige',
-        'bleu',
-        'vert'
+        'Noir',
+        'Rouge',
+        'Blanc',
+        'Gris',
+        'Beige',
+        'Bleu',
+        'Vert'
     ];
+
 
     public function carCarburant() {
         return self::randomElement(self::CARBURANT);

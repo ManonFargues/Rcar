@@ -14,7 +14,7 @@
             <h1 class="font-weight-light">Location de voiture : choisissez votre véhicule</h1>
             <p>Chez RCar, nous vous offrons la possibilité de louer une voiture adaptée à votre budget ainsi qu'à vos besoins. Vous avez aussi la possibilité de proposer votre propre voiture à la location.
                 Nos voitures à louer sont regroupées par catégories. La location de voiture avec RCar est simple et économique. </p>
-            <a class="btn btn-primary" href="{{ path("add") }}">Mettre une voiture en location</a>
+            <a class="btn btn-primary my-4" href="{{ path("add") }}">Mettre une voiture en location</a>
             <a class="btn btn-primary" href="{{ path("search_car") }}">Rechercher</a>
         </div>
         <!-- /.col-md-4 -->
@@ -46,9 +46,17 @@
         <div class="col-md-4 mb-5">
             <div class="card h-100">
                 <div class="card-body">
-                    <h2 class="card-title">{{ car.model }}</h2>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex
-                        numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
+                    {% if car.image.name is defined %}
+                        <img src="{{ asset('images/')~car.image.name }}" class="img-thumbnail">
+                    {% else %}
+                        <p>Pas d'image</p>
+                    {% endif %}
+                    <h2 class="card-title my-4">{{ car.model }}</h2>
+                    <div class="my-4">
+                    {% for keyword in car.keywords %}
+                    <span class="card-text">Description : {{ keyword.name }} {% if not loop.last %}, {% endif %}</span>
+                    {% endfor %}
+                    </div>
                     <p>Prix de la location : {{ car.price }} €</p>
                 </div>
                 <div class="card-footer">

@@ -54,12 +54,12 @@ class Car
     private $cities;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $color;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $carburant;
 
@@ -143,7 +143,9 @@ class Car
 
     public function removeCity(City $city): self
     {
-        $this->cities->removeElement($city);
+        if (!$this->cities->contains($city)) {
+            $this->cities->removeElement($city);
+        }
 
         return $this;
     }

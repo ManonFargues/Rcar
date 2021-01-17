@@ -6,22 +6,33 @@
             <div class="row">
                 <div class="col s12 m12">
                     {# <h1>Votre voiture avec l'id : {{ car.id }}</h1> #}
-                    <h2>Modèle : {{ car.model }}</h2>
-                    <h2>Prix : {{ car.price }} €</h2>
-                    {% if car.image.name is defined %}
-                        <img src="{{ asset('images/')~car.image.name }}"
-                    {% else %}
-                        <p>Pas d'image</p>
-                    {% endif %}
+                    <div class="my-4">
+                        <h2>Nom de l'annonce : {{ car.model }}</h2>
+                    </div>
+                    <div>
+                        {% if car.image.name is defined %}
+                            <img src="{{ asset('images/')~car.image.name }}" class="img-thumbnail w-50">
+                        {% else %}
+                            <p>Pas d'image</p>
+                        {% endif %}
+                    </div>
+                    <div class="my-4">
+                        <h2>Prix de la location: {{ car.price }} €</h2>
+                    </div>
 
+                    <div class="my-4">
+                        <span>Description :</span>
                     {% for keyword in car.keywords %}
                         <span>{{ keyword.name }} {% if not loop.last %}, {% endif %}</span>
                     {% endfor %}
+                    </div>
 
                     {% if car.cities |length > 0 %}
                     <p>Voiture disponible à : {% for city in car.cities %}<a class="btn btn-primary btn-sm my-4">{{ city.name }}</a>{% endfor %}</p>
                     {% endif %}
-                    <a href="{{ path("home") }}">Accueil</a>
+                    <div class="my-4">
+                    <a href="{{ path("home") }}">Retour à l'Accueil</a>
+                    </div>
                 </div>
             </div>
         </div>

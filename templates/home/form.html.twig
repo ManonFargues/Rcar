@@ -4,17 +4,29 @@
     {{ form_widget(form.model) }}
 </div>
 <div class="my-4">
-    {{ form_label(form.price, 'Prix de la voiture : ') }}
+    {{ form_label(form.price, 'Prix de la location : ') }}
     {{ form_widget(form.price) }}
 </div>
 <div class="my-4">
-{{ form_row(form.image) }}
+    {% if form.image.vars.value.id is defined %}
+        <img src="{{ asset('images/')~ form.image.vars.value.name }}" class="img-thumbnail w-50">
+    {% endif %}
+    <div class="">
+        <span>{{ (form.image.vars.value.name is defined) ? "Modifier l'" : "Ajouter une "}} image :</span>
+        {{ form_row(form.image) }}
+    </div>
 </div>
 <div class="my-4">
     {{ form_row(form.cities) }}
 </div>
 <div class="my-4">
-    <p>Ajouter un mot clé (fumeur/non fumeur, voiture neuve ... ) :</p>
+   {{ form_row(form.color) }}
+</div>
+<div class="my-4">
+    {{ form_row(form.carburant) }}
+</div>
+<div class="my-4">
+    <h5>Ajouter un mot clé (fumeur/non fumeur, voiture neuve ... ) :</h5>
     {{ form_widget(form.keywords) }}
     <button class="addKeyword btn btn-outline-primary">+ Mot clé suplémentaire?</button>
 </div>

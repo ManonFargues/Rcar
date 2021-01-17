@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass=ImageRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Image
 {
@@ -24,6 +25,18 @@ class Image
     private $name;
 
     private $file;
+
+    private $path;
+
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    public function setPath($path): void
+    {
+        $this->path = $path;
+    }
 
     public function getId(): ?int
     {
@@ -50,5 +63,29 @@ class Image
     public function setFile(UploadedFile $file): void
     {
         $this->file = $file;
+    }
+
+    /**
+     * @ORM\PreFlush()
+     */
+    public function handle()
+    {
+        if($this->file === null) {
+            return;
+        }
+
+        if($this->id) {
+            unlink($this->path.'/'.$this->name);
+        }
+
+        $name = $this->createName();
+        $this->setName($name);
+        $this->file->move($this->path, $name);
+    }
+
+    private function createName(): string
+    {
+        return md5(uniqid()). $this->file->getClientOriginalName().'.'.$this->file->guessExtension();
+
     }
 }
