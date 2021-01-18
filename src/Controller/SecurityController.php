@@ -2,13 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Token;
 use App\Entity\User;
 use App\Form\RegistrationType;
+use App\Repository\TokenRepository;
 use App\Security\LoginFormAuthenticator;
+use App\Services\TokenSendler;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
@@ -32,7 +36,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/registration", name="registration")
      */
-    public function registration(Request $request, EntityManagerInterface $manager, GuardAuthenticatorHandler $guardAuthenticatorHandler, LoginFormAuthenticator $loginFormAuthenticator, UserPasswordEncoderInterface $passwordEncoder)
+    public function registration(Request $request, EntityManagerInterface $manager, GuardAuthenticatorHandler $guardAuthenticatorHandler, LoginFormAuthenticator $loginFormAuthenticator, UserPasswordEncoderInterface $passwordEncoder, TokenSendler $tokenSendler)
     {
         $user = new User;
         $form = $this->createForm(RegistrationType::class, $user);
@@ -40,8 +44,46 @@ class SecurityController extends AbstractController
         if($form->handleRequest($request)->isSubmitted() && $form->isValid()) {
             $passwordEncoded = $passwordEncoder->encodePassword($user, $user->getPassword());
             $user->setPassword($passwordEncoded);
-            $user->setRoles(['ROLE_ADMIN']);
-            $manager->persist($user);
+            $user->setRoles(['ROLE_USER']);
+
+            $token = new Token($user);
+            $manager->persist($token);
+            $manager->flush();
+
+            $tokenSendler->sendToken($user, $token);
+
+            $this->addFlash(
+                'notice',
+                'Un email a été envoyé, veuillez consulte vos mails.'
+            );
+
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('security/registration.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/confirmation/{value}", name="token_validation")
+     */
+    public function validateToken(Token $token, TokenRepository $tokenRepository, EntityManagerInterface $manager, GuardAuthenticatorHandler $guardAuthenticatorHandler, LoginFormAuthenticator $loginFormAuthenticator, Request $request)
+    {
+        $user = $token->getUser();
+
+        if($user->getEnable()) {
+            $this->addFlash(
+                'notice',
+                'Le token déjà validé'
+            );
+
+            return $this->redirectToRoute('home');
+        }
+
+        if($token->isValid()) {
+
+            $user->setEnable(true);
             $manager->flush();
 
             return $guardAuthenticatorHandler->authenticateUserAndHandleSuccess(
@@ -52,11 +94,17 @@ class SecurityController extends AbstractController
             );
         }
 
-        return $this->render('security/registration.html.twig', [
-            'form' => $form->createView()
-        ]);
+        $manager->remove($token);
+        $manager->flush();
 
+        $this->addFlash(
+            'notice',
+            'Le token est expiré. '
+        );
+
+        return $this->redirectToRoute('security/registration');
     }
+
     /**
      * @Route("/logout", name="app_logout")
      */

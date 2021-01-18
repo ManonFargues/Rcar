@@ -3,7 +3,7 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 ">
                 <h1 class="mt-5 mb-5">Recherche</h1>
                 {{ form(search_form) }}
             </div>
@@ -19,13 +19,25 @@
                         <div class="col-md-4 mb-5">
                             <div class="card h-100">
                                 <div class="card-body">
-                                    <h2 class="card-title">{{ car.model }}</h2>
-                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex
-                                        numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
+                                    {% if car.image.name is defined %}
+                                        <img src="{{ asset('images/')~car.image.name }}" class="img-thumbnail">
+                                    {% else %}
+                                        <p>Pas d'image</p>
+                                    {% endif %}
+                                    <h2 class="card-title my-4">{{ car.model }}</h2>
+                                    <div class="my-4">
+                                        {% for keyword in car.keywords %}
+                                            <span class="card-text">Description : {{ keyword.name }} {% if not loop.last %}, {% endif %}</span>
+                                        {% endfor %}
+                                    </div>
                                     <p>Prix de la location : {{ car.price }} €</p>
                                 </div>
                                 <div class="card-footer">
-                                    <a href="{{ path('show', {'id' : car.id}) }}" class="btn btn-primary btn-sm">Détails</a>
+                                    <a href="{{ path('show', {'id' : car.id}) }}" class="btn btn-primary btn-sm">Voir cette annonce</a>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <a href="{{ path('edit', {'id' : car.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+                                        <a href="{{ path('delete', {'id' : car.id}) }}" class="btn btn-danger btn-sm">Supprimer</a>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>

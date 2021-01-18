@@ -32,19 +32,28 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Home
+                        <a class="nav-link" href="{{ path("home") }}">Home
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
+                    {% if app.user is null %}
                     <li class="nav-item">
+
                         <a class="nav-link" href="{{ path("app_login") }}">Connexion</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path("registration") }}">Inscription</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_USER') %}
+                        <a class="nav-link" href="{{ path("annonce") }}">Mes annonces</a>
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a class="nav-link" href="{{ path("admin") }}">Liste des utilisateurs</a>
+                    {% endif %}
+                    {% if is_granted('ROLE_USER') %}
+                        <a class="nav-link" href="{{ path("app_logout") }}">Déconnexion</a>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -124,11 +133,9 @@
 
             <!-- Grid column -->
             <div class="col-md-8 col-12 mt-5">
-                <p style="line-height: 1.7rem" class="text-white">Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                    accusantium doloremque laudantium, totam rem
-                    aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
-                    explicabo.
-                    Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur.</p>
+                <p style="line-height: 1.7rem" class="text-white">Location de voiture : choisissez votre véhicule</h1>
+                <p>Chez RCar, nous vous offrons la possibilité de louer une voiture adaptée à votre budget ainsi qu'à vos besoins. Vous avez aussi la possibilité de proposer votre propre voiture à la location.
+                    Nos voitures à louer sont regroupées par catégories. La location de voiture avec RCar est simple et économique. </p>
             </div>
             <!-- Grid column -->
 

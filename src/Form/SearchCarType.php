@@ -20,25 +20,30 @@ class SearchCarType extends AbstractType
     {
         $builder
             ->add('color', ChoiceType::class, [
+                'label' => 'Couleur :',
                 'choices' =>
                     array_combine(CarProvider::COLOR, CarProvider::COLOR)
             ])
             ->add('carburant', ChoiceType::class, [
+                'label' => 'Carburant :',
                 'choices' =>
                     array_combine(CarProvider::CARBURANT, CarProvider::CARBURANT)
             ])
             ->add('city', EntityType::class, [
+                'label' => 'Ville :',
                 'class' => City::class,
                 'choice_label' => 'name'
             ])
             ->add('minimumPrice', ChoiceType::class, [
-                'label' => 'Prix minimum',
+                'label' => 'Prix minimum :',
                 'choices' => array_combine(self::PRICE, self::PRICE)
             ])
             ->add('maximumPrice', ChoiceType::class, [
-                'label' => 'Prix maximum',
+                'label' => 'Prix maximum :',
                 'choices' => array_combine(self::PRICE, self::PRICE)
             ])
-            ->add('recherche', SubmitType::class);
+            ->add('recherche', SubmitType::class, [
+                'label' => 'Rechercher',
+            ]);
     }
 }

@@ -63,6 +63,21 @@ class Car
      */
     private $carburant;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="cars")
+     */
+    private $user;
+
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    public function setUser($user): void
+    {
+        $this->user = $user;
+    }
+
     public function __construct()
     {
         $this->keywords = new ArrayCollection();

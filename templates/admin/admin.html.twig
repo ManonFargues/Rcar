@@ -6,6 +6,13 @@
         <div class="row">
             <div class="col s12 m12 my-4">
                 <h1>Admin page</h1>
+
+                Liste des utilsateurs :
+                <ul>
+                    {% for user in users %}
+                        <li>{{ user.email }}</li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
     </div>

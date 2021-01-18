@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -33,6 +34,21 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $enable = true;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Car", mappedBy="user", cascade={"remove"})
+     */
+    private $cars;
+
+    public function __construct()
+    {
+        $this->cars = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -111,4 +127,41 @@ class User implements UserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
+    /**
+     * @return bool
+     */
+    public function isEnable(): bool
+    {
+        return $this->enable;
+    }
+
+    /**
+     * @param bool $enable
+     */
+    public function setEnable(bool $enable): void
+    {
+        $this->enable = $enable;
+    }
+
+    public function getEnable(): ?bool
+    {
+        return $this->enable;
+    }
+
+    public function getCars()
+    {
+        return $this->cars;
+    }
+
+    public function addCars($car): void
+    {
+        if(!$this->cars->contains($car)) {
+            $this->cars->add($car);
+            $car->setUser($this);
+        }
+    }
 }
+
+
+

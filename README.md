@@ -13,3 +13,27 @@ Site de location de voiture avec systeme d'authentification / Inscription
 	- tchat? bundle 
 	
 Utilisation du bundle AliceBundle pour créer du faux contenu.
+
+### Fonctionnalités :
+
+Non connecté : 
+
+    - Possibilité de consulter les annonces de location
+    - Possibilité de faire une Recherhce
+    - Inscription
+    
+Connecté :
+
+    - Consulter les annonces de location
+    - Mettre une voiture en location
+    - Possibilité de faire une Recherhce
+    - Accès à "Mes annonces" (liste d'annonces postées par l'user conecté)
+    - Possibilité de modifier / supprimer les annonces (de l'user connecté)   
+    
+Admin :
+
+    - Consulter les annonces de location
+    - Mettre une voiture en location
+    - Accès à "Mes annonces" (liste d'annonces postées par l'user conecté)
+    - Possibilité de modifier / supprimer les annonces (TOUTES les annonces) 
+    - Accès à "Liste des utilisateurs" (tous les user inscrit)
