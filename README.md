@@ -20,7 +20,7 @@ Non connecté :
 
     - Possibilité de consulter les annonces de location
     - Possibilité de faire une Recherhce
-    - Inscription
+    - Inscription avec confirmation (email)
     
 Connecté :
 
