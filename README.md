@@ -25,7 +25,14 @@ Non connecté :
 Connecté :
 
     - Consulter les annonces de location
-    - Mettre une voiture en location
+    - Mettre une voiture en location avec :
+        - nom
+        - prix
+        - image
+        - ville
+        - couleur
+        - type de carburant 
+        - mots clés
     - Possibilité de faire une Recherhce
     - Accès à "Mes annonces" (liste d'annonces postées par l'user conecté)
     - Possibilité de modifier / supprimer les annonces (de l'user connecté)   
