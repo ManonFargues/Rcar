@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="my-4 text-center">
+            <h1>
+                Mes locations :
+            </h1>
+        </div>
+
+        {% if items | length > 0 %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Modèle</th>
+                        <th>Type de carburant</th>
+                        <th>Couleur</th>
+                        <th>Prix</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                        <tr>
+                            <td>{{ item.car.model }}</td>
+                            <td>{{ item.car.carburant }}</td>
+                            <td>{{ item.car.color }}</td>
+                            <td>{{ item.car.price }} €</td>
+                            <td>
+                                <a href="{{ path('location_remove', {'id' : item.car.id}) }}" class="btn btn-danger btn-sm">
+                                    {# <i class="bi bi-trash"></i> #}
+                                    Annuler la location
+                                </a>
+
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Vous ne louez pas de voiture actuellement</p>
+        {% endif %}
+    </div>
+{% endblock %}
