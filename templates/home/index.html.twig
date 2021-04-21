@@ -15,13 +15,7 @@
                 </ol>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img class="d-block w-100" src="{{ asset("images/clio3.jpg") }}" alt="First slide">
-                    </div>
-                    <div class="carousel-item">
                         <img class="d-block w-100 " src="{{ asset("images/peugeot-208.jpg") }}" alt="Second slide">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100" src="{{ asset("images/twingo.jpg") }}" alt="Third slide">
                     </div>
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -40,9 +34,9 @@
             <p>Chez RCar, nous vous offrons la possibilité de louer une voiture adaptée à votre budget ainsi qu'à vos besoins. Vous avez aussi la possibilité de proposer votre propre voiture à la location.
                 Nos voitures à louer sont regroupées par catégories. La location de voiture avec RCar est simple et économique. </p>
             {% if is_granted('ROLE_USER') %}
-            <a class="btn btn-primary my-4" href="{{ path("add") }}">Mettre une voiture en location</a>
+            <a class="btn btn-dark my-4" href="{{ path("add") }}">Mettre une voiture en location</a>
             {% endif %}
-            <a class="btn btn-primary" href="{{ path("search_car") }}">Rechercher une voiture</a>
+            <a class="btn btn-dark" href="{{ path("search_car") }}">Rechercher une voiture</a>
         </div>
         <!-- /.col-md-4 -->
     </div>
@@ -87,7 +81,7 @@
                     <p>Prix de la location : {{ car.price }} €</p>
                 </div>
                 <div class="card-footer">
-                    <a href="{{ path('show', {'id' : car.id}) }}" class="btn btn-primary btn-sm">Voir cette annonce</a>
+                    <a href="{{ path('show', {'id' : car.id}) }}" class="btn btn-dark btn-sm ">Voir cette annonce</a>
                     {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{ path('edit', {'id' : car.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
                     <a href="{{ path('delete', {'id' : car.id}) }}" class="btn btn-danger btn-sm">Supprimer</a>

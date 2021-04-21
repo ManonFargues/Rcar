@@ -13,9 +13,7 @@ class KeywordType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, [
-                'label' => ' '
-            ])
+            ->add('name', TextType::class)
         ;
     }
 

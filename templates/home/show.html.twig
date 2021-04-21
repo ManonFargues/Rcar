@@ -29,7 +29,9 @@
                     {% if car.cities |length > 0 %}
                     <p>Voiture disponible à : {% for city in car.cities %}<a class="btn btn-primary btn-sm my-4">{{ city.name }}</a>{% endfor %}</p>
                     {% endif %}
+                    {% if is_granted('ROLE_USER') %}
                     <a href="{{ path('location_add', {'id' : car.id}) }}" class="btn btn-primary btn-sm">Louer</a>
+                    {% endif %}
                     <div class="my-4">
                     <a href="{{ path("home") }}" class="btn btn-primary btn-sm">Retour à l'Accueil</a>
                     </div>

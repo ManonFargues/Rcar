@@ -1,4 +1,21 @@
 {
+    "api-platform/api-pack": {
+        "version": "v1.3.0"
+    },
+    "api-platform/core": {
+        "version": "2.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "2.5",
+            "ref": "a93061567140e386f107be75340ac2aee3f86cbf"
+        },
+        "files": [
+            "config/packages/api_platform.yaml",
+            "config/routes/api_platform.yaml",
+            "src/Entity/.gitignore"
+        ]
+    },
     "composer/package-versions-deprecated": {
         "version": "1.11.99.1"
     },
@@ -87,6 +104,12 @@
     "fakerphp/faker": {
         "version": "v1.13.0"
     },
+    "fig/link-util": {
+        "version": "1.1.2"
+    },
+    "friendsofphp/proxy-manager-lts": {
+        "version": "v1.0.3"
+    },
     "hautelook/alice-bundle": {
         "version": "2.1",
         "recipe": {
@@ -100,6 +123,15 @@
             "config/packages/test/hautelook_alice.yaml",
             "fixtures/.gitignore"
         ]
+    },
+    "laminas/laminas-code": {
+        "version": "3.4.1"
+    },
+    "laminas/laminas-eventmanager": {
+        "version": "3.3.1"
+    },
+    "laminas/laminas-zendframework-bridge": {
+        "version": "1.2.0"
     },
     "monolog/monolog": {
         "version": "2.1.1"
@@ -120,11 +152,20 @@
             "config/packages/test/nelmio_alice.yaml"
         ]
     },
+    "nelmio/cors-bundle": {
+        "version": "1.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.5",
+            "ref": "6bea22e6c564fba3a1391615cada1437d0bde39c"
+        },
+        "files": [
+            "config/packages/nelmio_cors.yaml"
+        ]
+    },
     "nikic/php-parser": {
         "version": "v4.10.3"
-    },
-    "ocramius/proxy-manager": {
-        "version": "2.2.3"
     },
     "php": {
         "version": "7.3"
@@ -428,6 +469,9 @@
     "symfony/property-info": {
         "version": "v5.2.0"
     },
+    "symfony/proxy-manager-bridge": {
+        "version": "v5.2.4"
+    },
     "symfony/routing": {
         "version": "5.1",
         "recipe": {
@@ -591,10 +635,7 @@
     "webmozart/assert": {
         "version": "1.9.1"
     },
-    "zendframework/zend-code": {
-        "version": "3.4.1"
-    },
-    "zendframework/zend-eventmanager": {
-        "version": "3.2.1"
+    "willdurand/negotiation": {
+        "version": "3.0.0"
     }
 }

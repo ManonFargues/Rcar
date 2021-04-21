@@ -21,6 +21,7 @@ class MaintenanceSubscriber implements EventSubscriberInterface
 
     public function onResponse(ResponseEvent $responseEvent)
     {
+        //passer à true met le site en maintenance
         $maintenance = false;
 
         if($maintenance) {

@@ -29,6 +29,7 @@ class User implements UserInterface
      */
     private $roles = [];
 
+
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
@@ -154,12 +155,36 @@ class User implements UserInterface
         return $this->cars;
     }
 
+
+
     public function addCars($car): void
     {
         if(!$this->cars->contains($car)) {
             $this->cars->add($car);
             $car->setUser($this);
         }
+    }
+
+    public function addCar(Car $car): self
+    {
+        if (!$this->cars->contains($car)) {
+            $this->cars[] = $car;
+            $car->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCar(Car $car): self
+    {
+        if ($this->cars->removeElement($car)) {
+            // set the owning side to null (unless already changed)
+            if ($car->getUser() === $this) {
+                $car->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }
 

@@ -35,14 +35,6 @@ class CarController extends AbstractController
     }
 
     /**
-     * @Route("/contact", name="contact")
-     */
-    public function contact()
-    {
-        return $this->render('home/contact.html.twig');
-    }
-
-    /**
      * @Route("/car/add", name="add")
      */
     public function add(EntityManagerInterface $manager, Request $request, ImageHandler $handler)
@@ -68,7 +60,6 @@ class CarController extends AbstractController
                 'notice',
                 'La voiture a bien été ajoutée'
             );
-
 
             return $this->redirectToRoute('home');
         }
