@@ -10,7 +10,6 @@ Site de location de voiture avec systeme d'authentification / Inscription
 	- Back Office pour utilisateur et admin
 	- Formulaire d'annonce 
 	- Barre de Recherche
-	- tchat? bundle 
 	
 Utilisation du bundle AliceBundle pour créer du faux contenu.
 
@@ -20,7 +19,7 @@ Non connecté :
 
     - Possibilité de consulter les annonces de location
     - Possibilité de faire une Recherhce
-    - Inscription avec confirmation (email)
+    - Inscription
     
 Connecté :
 
